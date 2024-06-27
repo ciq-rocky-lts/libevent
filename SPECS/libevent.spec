@@ -1,6 +1,6 @@
 Name:           libevent
 Version:        2.0.21
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Abstract asynchronous event notification library
 
 Group:          System Environment/Libraries
@@ -13,7 +13,7 @@ BuildRequires: doxygen openssl-devel
 Patch00: libevent-2.0.10-stable-configure.patch
 # Disable network tests
 Patch01: libevent-nonettests.patch
-Patch02: libevent-cve-2016-10195.patch
+Patch02: libevent-2016-cves.patch
 
 %description
 The libevent API provides a mechanism to execute a callback function
@@ -50,7 +50,7 @@ need to install %{name}-doc.
 # 477685 -  libevent-devel multilib conflict
 %patch00 -p1
 %patch01 -p1 -b .nonettests
-%patch02 -p1 -b .cve-2016-10195
+%patch02 -p1 -b .2016-cves
 
 %build
 %configure \
@@ -116,6 +116,12 @@ make check
 %{_docdir}/%{name}-devel-%{version}/sample/*
 
 %changelog
+* Thu Jun 27 2024 Joseph Tate <jtate@ciq.com> - 2.0.21-6
+- Fix CVE-2016-10196
+- Fix CVE-2016-10197
+- https://github.com/libevent/libevent/issues/318
+- https://github.com/libevent/libevent/issues/332
+
 * Wed Jun 26 2024 Joseph Tate <jtate@ciq.com> - 2.0.21-5
 - Fix CVE-2016-10195
 - https://github.com/libevent/libevent/issues/317
