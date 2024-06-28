@@ -1,6 +1,6 @@
 Name:           libevent
 Version:        2.0.21
-Release:        6%{?dist}
+Release:        6.1%{?dist}
 Summary:        Abstract asynchronous event notification library
 
 Group:          System Environment/Libraries
@@ -116,6 +116,9 @@ make check
 %{_docdir}/%{name}-devel-%{version}/sample/*
 
 %changelog
+* Thu Jun 27 2024 Joseph Tate <jtate@ciq.com> - 2.0.21-6.1
+- Fix broken patch
+
 * Thu Jun 27 2024 Joseph Tate <jtate@ciq.com> - 2.0.21-6
 - Fix CVE-2016-10196
 - Fix CVE-2016-10197

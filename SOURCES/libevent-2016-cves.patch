@@ -17,3 +17,39 @@ diff --color -uNr libevent-2.0.21-stable-orig/evdns.c libevent-2.0.21-stable/evd
  		memcpy(cp, packet + j, label_len);
  		cp += label_len;
  		j += label_len;
+diff --color -uNr libevent-2.0.21-stable-orig/evdns.c libevent-2.0.21-stable/evdns.c
+--- libevent-2.0.21-stable-orig/evdns.c	2024-06-26 18:36:43.839534352 -0400
++++ libevent-2.0.21-stable/evdns.c	2024-06-27 02:50:56.941919215 -0400
+@@ -3107,9 +3107,12 @@
+ static char *
+ search_make_new(const struct search_state *const state, int n, const char *const base_name) {
+ 	const size_t base_len = strlen(base_name);
+-	const char need_to_append_dot = base_name[base_len - 1] == '.' ? 0 : 1;
++	char need_to_append_dot;
+ 	struct search_domain *dom;
+ 
++	if (!base_len) return NULL;
++	need_to_append_dot = base_name[base_len - 1] == '.' ? 0 : 1;
++
+ 	for (dom = state->head; dom; dom = dom->next) {
+ 		if (!n--) {
+ 			/* this is the postfix we want */
+diff --color -uNr libevent-2.0.21-stable-orig/evutil.c libevent-2.0.21-stable/evutil.c
+--- libevent-2.0.21-stable-orig/evutil.c	2024-06-26 18:36:43.839534352 -0400
++++ libevent-2.0.21-stable/evutil.c	2024-06-27 02:54:06.297494495 -0400
+@@ -1808,12 +1808,12 @@
+ 
+ 	cp = strchr(ip_as_string, ':');
+ 	if (*ip_as_string == '[') {
+-		int len;
++		size_t len;
+ 		if (!(cp = strchr(ip_as_string, ']'))) {
+ 			return -1;
+ 		}
+-		len = (int) ( cp-(ip_as_string + 1) );
+-		if (len > (int)sizeof(buf)-1) {
++		len = ( cp-(ip_as_string + 1) );
++		if (len > sizeof(buf)-1) {
+ 			return -1;
+ 		}
+ 		memcpy(buf, ip_as_string+1, len);
