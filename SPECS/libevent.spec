@@ -1,6 +1,6 @@
 Name:           libevent
 Version:        2.0.21
-Release:        6.1%{?dist}.0.1
+Release:        6.2%{?dist}.0.1
 Summary:        Abstract asynchronous event notification library
 
 Group:          System Environment/Libraries
@@ -14,6 +14,10 @@ Patch00: libevent-2.0.10-stable-configure.patch
 # Disable network tests
 Patch01: libevent-nonettests.patch
 Patch02: libevent-2016-cves.patch
+# CVE-2026-63383 — upstream backport
+Patch3: libevent-2.0.21-CVE-2026-63383.patch
+# CVE-2026-63387 — upstream backport
+Patch4: libevent-2.0.21-CVE-2026-63387.patch
 
 %description
 The libevent API provides a mechanism to execute a callback function
@@ -51,6 +55,8 @@ need to install %{name}-doc.
 %patch00 -p1
 %patch01 -p1 -b .nonettests
 %patch02 -p1 -b .2016-cves
+%patch3 -p1 -b .CVE-2026-63383
+%patch4 -p1 -b .CVE-2026-63387
 
 %build
 %configure \
@@ -116,6 +122,10 @@ make check
 %{_docdir}/%{name}-devel-%{version}/sample/*
 
 %changelog
+* Thu Sep 03 2026 Jason Rodriguez <jrodriguez@ciq.com> - 2.0.21-6.2.0.1
+- Fix CVE-2026-63383
+- Fix CVE-2026-63387
+
 * Tue Jul 09 2024 Neil Hanlon <nhanlon@ciq.com> - 2.0.21-6.1.0.1
 - rebuild for multilib
 
