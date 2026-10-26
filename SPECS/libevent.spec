@@ -2,7 +2,7 @@
 
 Name:           libevent
 Version:        2.1.12
-Release:        8.3%{?dist}
+Release:        8.4%{?dist}
 Summary:        Abstract asynchronous event notification library
 
 # arc4random.c, which is used in build, is ISC. The rest is BSD.
@@ -48,6 +48,10 @@ Patch9: libevent-2.1.12-CVE-2026-63384.patch
 Patch10: libevent-2.1.12-CVE-2026-63388.patch
 # CVE-2026-63385 — upstream backport
 Patch11: libevent-2.1.12-CVE-2026-63385.patch
+# CVE-2026-63379
+Patch12: libevent-2.1.12-CVE-2026-63379.patch
+# CVE-2026-63381
+Patch13: libevent-2.1.12-CVE-2026-63381.patch
 
 %description
 The libevent API provides a mechanism to execute a callback function
@@ -89,6 +93,8 @@ This package contains the development documentation for %{name}.
 %patch9 -p1 -b .CVE-2026-63384
 %patch10 -p1 -b .CVE-2026-63388
 %patch11 -p1 -b .CVE-2026-63385
+%patch12 -p1 -b .CVE-2026-63379
+%patch13 -p1 -b .CVE-2026-63381
 
 pathfix.py -i %{__python3} -pn test/check-dumpevents.py \
                                event_rpcgen.py
@@ -172,6 +178,10 @@ mkdir -p $RPM_BUILD_ROOT/%{develdocdir}/sample
 %doc %{develdocdir}/
 
 %changelog
+* Mon Oct 26 2026 Jason Rodriguez <jrodriguez@ciq.com> - 2.1.12-8.4
+- Fix CVE-2026-63379
+- Fix CVE-2026-63381
+
 * Wed Sep 23 2026 Jason Rodriguez <jrodriguez@ciq.com> - 2.1.12-8.3
 - Fix CVE-2026-63383
 - Fix CVE-2026-63384
